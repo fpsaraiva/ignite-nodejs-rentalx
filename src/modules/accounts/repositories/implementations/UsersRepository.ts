@@ -2,7 +2,7 @@ import { getRepository, Repository } from "typeorm";
 
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { User } from "../../entities/User";
-import { IUsersRepository } from "../IUserRepository";
+import { IUsersRepository } from "../IUsersRepository";
 
 class UsersRepository implements IUsersRepository {
   private repository: Repository<User>;
@@ -20,6 +20,11 @@ class UsersRepository implements IUsersRepository {
     });
 
     await this.repository.save(user);
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.repository.findOne({email});
+    return user;
   }
 }
 
